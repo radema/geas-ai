@@ -1,0 +1,27 @@
+[project]
+name = "pact-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Raul De Maio", email = "raul.demaio@openeconomics.eu" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pyyaml>=6.0.3",
+    "rich>=14.2.0",
+    "typer>=0.21.0",
+]
+
+[project.scripts]
+pact = "pact_cli.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "ruff>=0.14.10",
+]
