@@ -12,6 +12,7 @@ wheels/
 .venv
 
 # PACT config
-.pacts/config
+.pacts/config/*
+
 # Antigravity
 .agent
