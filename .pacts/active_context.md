@@ -1,8 +1,8 @@
 # Active Context
 
-**Current Bolt:** feature-pact-init
-**Path:** .pacts/bolts/feature-pact-init
-**Started:** 2025-12-27 22:24:05
+**Current Bolt:** feature-bolt-commands
+**Path:** .pacts/bolts/feature-bolt-commands
+**Started:** 2025-12-27 22:43:14
 
 ## Instructions for Agent
 You are currently working on the Bolt listed above.
