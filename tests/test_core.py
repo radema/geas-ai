@@ -80,9 +80,10 @@ def test_status_command(runner, setup_pact_environment):
     # Actual output structure: req | <timestamp> | <hash>
     pattern = r"req\s+│\s+202\d-.*│\s+[a-f0-9]+"
     match = re.search(pattern, result_sealed.stdout)
-    assert (
-        match is not None
-    ), f"req row missing Timestamp or Hash. Output matches pattern '{pattern}':\n{result_sealed.stdout}"
+    assert match is not None, f"""
+    req row missing Timestamp or Hash.
+    Output matches pattern '{pattern}':\n{result_sealed.stdout}
+    """
 
 
 def test_checkout_command(runner, setup_pact_environment):
