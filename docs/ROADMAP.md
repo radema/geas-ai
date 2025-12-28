@@ -32,7 +32,9 @@ Goal: A stable CLI that manages the .pacts folder structure and configuration.
 
 [ ] Add tests for CI
 
-[ ] Publish to PyPI.
+[ ] Publish to PyPI + Add Release pipeline to GitHub Actions
+
+[ ] Add automated Documentation generation
 
 ## Phase 2: The SE 3.0 Workflow (v0.2)
 
