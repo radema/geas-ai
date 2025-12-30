@@ -3,7 +3,7 @@ import typer
 from datetime import datetime
 from rich.console import Console
 from rich.panel import Panel
-from pact_ai import utils
+from geas_ai import utils
 
 console = Console()
 
@@ -17,10 +17,10 @@ def seal(
         target: The artifact to seal.
 
     Usage:
-        $ pact seal req
-        $ pact seal specs
+        $ geas seal req
+        $ geas seal specs
     """
-    utils.ensure_pact_root()
+    utils.ensure_geas_root()
     bolt_path = utils.get_active_bolt_path()
     lock_file = bolt_path / "approved.lock"
 
@@ -63,6 +63,6 @@ def seal(
     console.print(
         Panel(
             f"[bold green]Sealed {target}![/bold green]\nHash: {new_hash[:12]}...",
-            title="PACT Seal",
+            title="GEAS Seal",
         )
     )

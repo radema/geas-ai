@@ -7,20 +7,20 @@ from rich.console import Console
 console = Console()
 
 
-def get_pact_root() -> Path:
-    """Returns the Path to the .pacts directory."""
-    return Path(".pacts")
+def get_geas_root() -> Path:
+    """Returns the Path to the .geas directory."""
+    return Path(".geas")
 
 
-def ensure_pact_root() -> Path:
-    """Checks if the current directory has a .pacts/ folder.
+def ensure_geas_root() -> Path:
+    """Checks if the current directory has a .geas/ folder.
 
     Returns the Path to the current directory if true.
     Raises typer.Exit(1) if false.
     """
-    if not os.path.exists(".pacts"):
+    if not os.path.exists(".geas"):
         console.print(
-            "[bold red]Error:[/bold red] PACT is not initialized. Run `pact init` first."
+            "[bold red]Error:[/bold red] GEAS is not initialized. Run `geas init` first."
         )
         raise typer.Exit(code=1)
     return Path(".")
@@ -57,9 +57,9 @@ def compute_sha256(file_path: Path) -> str:
 
 def get_active_bolt_path() -> Path:
     """
-    Reads .pacts/active_context.md to find the current bolt path.
+    Reads .geas/active_context.md to find the current bolt path.
     """
-    ctx_file = Path(".pacts/active_context.md")
+    ctx_file = Path(".geas/active_context.md")
     if not ctx_file.exists():
         console.print("[bold red]Error:[/bold red] No active context found.")
         raise typer.Exit(code=1)
@@ -84,8 +84,8 @@ def get_active_bolt_path() -> Path:
 
 
 def get_active_bolt_name() -> str:
-    """Reads .pacts/active_context.md to find the current bolt name."""
-    ctx_file = Path(".pacts/active_context.md")
+    """Reads .geas/active_context.md to find the current bolt name."""
+    ctx_file = Path(".geas/active_context.md")
     if not ctx_file.exists():
         console.print("[bold red]Error:[/bold red] No active context found.")
         raise typer.Exit(code=1)

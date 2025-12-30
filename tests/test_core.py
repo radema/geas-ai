@@ -1,44 +1,44 @@
-from pact_ai.main import app
+from geas_ai.main import app
 import os
 import yaml
 
 
 def test_init_command(runner, tmp_path):
-    """Test 'pact init' creates the necessary structure."""
+    """Test 'geas init' creates the necessary structure."""
     cwd = os.getcwd()
     os.chdir(tmp_path)
     try:
         result = runner.invoke(app, ["init"])
         assert result.exit_code == 0
-        assert "Success! PACT initialized" in result.stdout
-        assert (tmp_path / ".pacts").exists()
-        assert (tmp_path / ".pacts/config").exists()
-        assert (tmp_path / ".pacts/bolts").exists()
-        assert (tmp_path / ".pacts/config/agents.yaml").exists()
+        assert "Success! GEAS initialized" in result.stdout
+        assert (tmp_path / ".geas").exists()
+        assert (tmp_path / ".geas/config").exists()
+        assert (tmp_path / ".geas/bolts").exists()
+        assert (tmp_path / ".geas/config/agents.yaml").exists()
     finally:
         os.chdir(cwd)
 
 
-def test_new_bolt_command(runner, setup_pact_environment):
-    """Test 'pact new' creates a new bolt."""
+def test_new_bolt_command(runner, setup_geas_environment):
+    """Test 'geas new' creates a new bolt."""
     result = runner.invoke(app, ["new", "test-bolt"])
     assert result.exit_code == 0
     assert "Bolt Started!" in result.stdout
 
-    bolt_path = setup_pact_environment / ".pacts/bolts/test-bolt"
+    bolt_path = setup_geas_environment / ".geas/bolts/test-bolt"
     assert bolt_path.exists()
     assert (bolt_path / "01_request.md").exists()
 
     # Check that context was switched
-    ctx_file = setup_pact_environment / ".pacts/active_context.md"
+    ctx_file = setup_geas_environment / ".geas/active_context.md"
     assert "Current Bolt:** test-bolt" in ctx_file.read_text()
 
 
-def test_seal_flow(runner, setup_pact_environment):
+def test_seal_flow(runner, setup_geas_environment):
     """Test the sealing flow: req -> seal req -> verify."""
     # 1. Create bolt
     runner.invoke(app, ["new", "seal-test"])
-    bolt_path = setup_pact_environment / ".pacts/bolts/seal-test"
+    bolt_path = setup_geas_environment / ".geas/bolts/seal-test"
 
     # 2. Seal Request
     result = runner.invoke(app, ["seal", "req"])
@@ -60,8 +60,8 @@ def test_seal_flow(runner, setup_pact_environment):
     assert "PASS" in result_verify.stdout
 
 
-def test_status_command(runner, setup_pact_environment):
-    """Test 'pact status' displays info."""
+def test_status_command(runner, setup_geas_environment):
+    """Test 'geas status' displays info."""
     import re
 
     runner.invoke(app, ["new", "status-test"])
@@ -86,7 +86,7 @@ def test_status_command(runner, setup_pact_environment):
     """
 
 
-def test_checkout_command(runner, setup_pact_environment):
+def test_checkout_command(runner, setup_geas_environment):
     """Test switching contexts."""
     runner.invoke(app, ["new", "bolt-a"])
     runner.invoke(app, ["new", "bolt-b"])
@@ -96,5 +96,5 @@ def test_checkout_command(runner, setup_pact_environment):
     assert result.exit_code == 0
     assert "Switched to bolt: bolt-a" in result.stdout
 
-    ctx_file = setup_pact_environment / ".pacts/active_context.md"
+    ctx_file = setup_geas_environment / ".geas/active_context.md"
     assert "Current Bolt:** bolt-a" in ctx_file.read_text()

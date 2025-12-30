@@ -1,15 +1,15 @@
 import yaml
 import typer
 from rich.table import Table
-from pact_ai import utils
+from geas_ai import utils
 
 
 def agents() -> None:
     """List the currently active agents configuration."""
-    utils.ensure_pact_root()
+    utils.ensure_geas_root()
 
-    # Read from global .pacts/config/agents.yaml
-    config_path = utils.get_pact_root() / "config/agents.yaml"
+    # Read from global .geas/config/agents.yaml
+    config_path = utils.get_geas_root() / "config/agents.yaml"
 
     if not config_path.exists():
         utils.console.print(
@@ -32,7 +32,7 @@ def agents() -> None:
         )
         return
 
-    table = Table(title="PACT Agents Roster (Global)")
+    table = Table(title="GEAS Agents Roster (Global)")
     table.add_column("Agent Name", style="cyan", no_wrap=True)
     table.add_column("Role", style="magenta")
     table.add_column("Goal", style="green")

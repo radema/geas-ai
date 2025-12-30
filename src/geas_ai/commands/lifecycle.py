@@ -4,30 +4,30 @@ import typer
 from datetime import datetime
 from rich.console import Console
 from rich.panel import Panel
-from pact_ai import utils
-from pact_ai.core import content
-from pact_ai.commands.verify import verify as run_verify
+from geas_ai import utils
+from geas_ai.core import content
+from geas_ai.commands.verify import verify as run_verify
 
 console = Console()
 
 
 def new(name: str) -> None:
-    """Start a new PACT Unit of Work (Bolt).
+    """Start a new GEAS Unit of Work (Bolt).
 
-    Creates .pacts/bolts/<name>/ and updates .pacts/active_context.md.
+    Creates .geas/bolts/<name>/ and updates .geas/active_context.md.
 
     Args:
         name: The name of the bolt (slugified).
 
     Usage:
-        $ pact new feature-login
+        $ geas new feature-login
     """
     try:
         # 1. Validation
-        utils.ensure_pact_root()
+        utils.ensure_geas_root()
         utils.validate_slug(name)
 
-        bolt_dir = os.path.join(".pacts", "bolts", name)
+        bolt_dir = os.path.join(".geas", "bolts", name)
 
         # 2. Check for existence (Idempotencyish warning)
         if os.path.exists(bolt_dir):
@@ -43,7 +43,7 @@ def new(name: str) -> None:
             f.write(content.REQUEST_TEMPLATE.format(bolt_name=name))
 
         # 5. Update Context
-        ctx_path = os.path.join(".pacts", "active_context.md")
+        ctx_path = os.path.join(".geas", "active_context.md")
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(ctx_path, "w") as f:
             f.write(
@@ -70,17 +70,17 @@ def checkout(name: str) -> None:
     """Switch the current active context to a different bolt.
 
     Usage:
-        $ pact checkout feature-login
+        $ geas checkout feature-login
     """
-    utils.ensure_pact_root()
-    bolt_dir = utils.get_pact_root() / "bolts" / name
+    utils.ensure_geas_root()
+    bolt_dir = utils.get_geas_root() / "bolts" / name
 
     if not bolt_dir.exists():
         console.print(f"[bold red]Error:[/bold red] Bolt '{name}' does not exist.")
         raise typer.Exit(code=1)
 
     # Update active_context.md
-    ctx_path = utils.get_pact_root() / "active_context.md"
+    ctx_path = utils.get_geas_root() / "active_context.md"
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
@@ -92,7 +92,7 @@ def checkout(name: str) -> None:
         console.print(
             Panel(
                 f"[bold green]Switched to bolt:[/bold green] [blue]{name}[/blue]",
-                title="pact checkout",
+                title="geas checkout",
             )
         )
     except Exception as e:
@@ -109,9 +109,9 @@ def delete(
     """Delete a bolt. Cannot delete the currently active bolt.
 
     Usage:
-        $ pact delete feature-obsolete
+        $ geas delete feature-obsolete
     """
-    utils.ensure_pact_root()
+    utils.ensure_geas_root()
 
     # Safety Check: Do not delete active bolt
     try:
@@ -125,7 +125,7 @@ def delete(
         # If no active context, proceed with caution
         pass
 
-    bolt_dir = utils.get_pact_root() / "bolts" / name
+    bolt_dir = utils.get_geas_root() / "bolts" / name
     if not bolt_dir.exists():
         console.print(f"[bold red]Error:[/bold red] Bolt '{name}' does not exist.")
         raise typer.Exit(code=1)
@@ -150,11 +150,11 @@ def archive(name: str) -> None:
     and verified.
 
     Usage:
-        $ pact archive feature-completed
+        $ geas archive feature-completed
     """
-    utils.ensure_pact_root()
-    bolt_dir = utils.get_pact_root() / "bolts" / name
-    archive_root = utils.get_pact_root() / "archive"
+    utils.ensure_geas_root()
+    bolt_dir = utils.get_geas_root() / "bolts" / name
+    archive_root = utils.get_geas_root() / "archive"
 
     if not bolt_dir.exists():
         console.print(f"[bold red]Error:[/bold red] Bolt '{name}' does not exist.")
@@ -165,11 +165,6 @@ def archive(name: str) -> None:
     try:
         # Run verify logic (will exit 1 if fails)
         run_verify(bolt=name)
-
-        # Check if ALL core artifacts are actually sealed (verify -b doesn't enforce ALL are sealed, just that those sealed are valid)
-        # Actually verify.py in my implementation shows [dim]Not Sealed[/dim] for missing ones but doesn't necessarily fail unless 'all_passed' is false.
-        # But 'all_passed' only flips if file missing or drift.
-        # Requirement AC 5.2: "It must only succeed if the bolt is 'Fully Verified' (all artifacts req, specs, plan, mrp are sealed and hashes match)."
 
         lock_file = bolt_dir / "approved.lock"
         import yaml

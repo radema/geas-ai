@@ -1,23 +1,23 @@
-from pact_ai.main import app
+from geas_ai.main import app
 
 
-def test_agents_command_global(runner, setup_pact_environment):
+def test_agents_command_global(runner, setup_geas_environment):
     """
-    Test that 'pact agents' correctly reads and displays the global configuration.
+    Test that 'geas agents' correctly reads and displays the global configuration.
     """
     result = runner.invoke(app, ["agents"])
     assert result.exit_code == 0
-    assert "PACT Agents Roster (Global)" in result.stdout
+    assert "GEAS Agents Roster (Global)" in result.stdout
     assert "test_agent" in result.stdout
     assert "Test Role" in result.stdout
     assert "Test Goal" in result.stdout
 
 
-def test_agents_command_no_pact(runner, tmp_path):
+def test_agents_command_no_geas(runner, tmp_path):
     """
-    Test that 'pact agents' fails properly if not in a pact environment.
+    Test that 'geas agents' fails properly if not in a geas environment.
     """
-    # Ensure we are in an empty temp dir and PACT is not initialized
+    # Ensure we are in an empty temp dir and GEAS is not initialized
     import os
 
     current_cwd = os.getcwd()
@@ -25,6 +25,6 @@ def test_agents_command_no_pact(runner, tmp_path):
     try:
         result = runner.invoke(app, ["agents"])
         assert result.exit_code == 1
-        assert "PACT is not initialized" in result.stdout
+        assert "GEAS is not initialized" in result.stdout
     finally:
         os.chdir(current_cwd)

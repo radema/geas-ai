@@ -4,7 +4,7 @@ from typing import Optional
 from datetime import datetime
 from rich.console import Console
 from rich.table import Table
-from pact_ai import utils
+from geas_ai import utils
 
 console = Console()
 
@@ -17,13 +17,13 @@ def verify(
     """Verify the cryptographic integrity and temporal sequence of a bolt.
 
     Usage:
-        $ pact verify
-        $ pact verify -b feature-login
+        $ geas verify
+        $ geas verify -b feature-login
     """
-    utils.ensure_pact_root()
+    utils.ensure_geas_root()
 
     if bolt:
-        bolt_path = utils.get_pact_root() / "bolts" / bolt
+        bolt_path = utils.get_geas_root() / "bolts" / bolt
         if not bolt_path.exists():
             console.print(f"[bold red]Error:[/bold red] Bolt '{bolt}' not found.")
             raise typer.Exit(code=1)
