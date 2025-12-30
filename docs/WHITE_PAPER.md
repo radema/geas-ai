@@ -1,43 +1,78 @@
-# GEAS-AI Whitepaper
+# GEAS: Governance Enforcement for Agent Systems
 
-Protocol for Agent Control & Trust
+A proposal for a protocol for the "Software Engineering 3.0" Era
 
 ## Executive Summary
 
-GEAS-AI is a repository-native governance protocol designed for Software Engineering 3.0 (SE 3.0). As development shifts from human-authored code to AI-generated implementation, the critical bottleneck moves from "Writing Speed" to "Trust & Verification."
+GEAS (pronounced gesh) is a repository-native governance protocol designed to solve the "Day 2" problem of AI-driven development: Trust.
 
-GEAS goal is to implement a strict AI-DLC (AI Development Life Cycle) by enforcing a "Filesystem Sovereignty" model. It prevents "Agent Drift"—where AI diverts from the original intent—by requiring cryptographic seals on specifications before any implementation occurs.
+As software engineering shifts from Human-Authored to Agent-Generated, the bottleneck moves from velocity to verification. Organizations face a new risk: "Agent Drift," where autonomous models deviate from intent, hallucinate features, or introduce subtle bugs that bypass traditional review.
 
-## The Role Architecture
+GEAS solves this by treating Agent instructions as a Binding Vow (a Geas). It enforces a strict "Filesystem Sovereignty" model where no code is accepted unless it is cryptographically linked to a sealed intent.
 
-Aligning with modern Agentic patterns, GEAS defines a default team of five specialized agents to ensure separation of concerns:
+## The Core Philosophy
 
-* The Spec Writer (Requirement Engineering): Translates ambiguity into rigid Gherkin-style intent.
+In mythology, a Geas is a magical obligation. If the hero breaks the vow, they lose their power.
+In our protocol:
 
-* The Architect (DOMA Gatekeeper): Ensures new features respect domain boundaries and do not introduce structural debt.
+* The Hero(es): The AI Agent(s).
+* The Vow: the technical documents (requirements, specifications, plan, etc.)
+* The Power: The ability to merge code.
 
-* The Developer (Implementation): A narrow-focus agent that executes the sealed plan.
+### The "Day 2" Reality
 
-* The Doc Writer (Knowledge Management): Ensures the codebase remains intelligible to humans and future agents.
+Current tools focus on creation. GEAS focuses on the Chain of Custody.
 
-* The QA Engineer (Verification): The ultimate gatekeeper, validating that implementation matches the intent (MRP).
+* Identity: Who wrote this function? (Human or Machine?)
+* Integrity: Has the Spec changed since the code was written?
+* Audit: Can we prove the tests passed at the moment of sealing?
 
-## The Core Axioms
+## The Architecture: "Steering & Engine"
 
-1. **Protocol over Platform**: GEAS-AI is not a SaaS. It is a local protocol defined by file structures (.geas/).
+GEAS is not a SaaS platform. It is a local protocol defined by a hidden directory structure (.geas/) that lives alongside your code.
 
-2. **No Action Without Seal**: Execution is cryptographically blocked until the Blueprint (02_specs.md) is approved.
+* The Steering (The Protocol): The geas CLI manages the lifecycle of "Bindings" (Units of Work). It acts as the notary.
 
-3. **Separation of Infrastructure & Intellect**: Model configurations (models.yaml) are decoupled from Agent definitions (agents.yaml).
+* The Engine (The Agent): Your existing AI tool acts as the runtime. It can read the GEAS state to understand its boundaries.
 
-## The Architecture
+## The Lifecycle of a "Binding"
 
-GEAS-AI operates on a "Steering & Engine" model:
+GEAS replaces the generic "Ticket" with a "Binding"—a cryptographically secured folder representing a single unit of work.
 
-1. The Steering (GEAS CLI): A Python-based governance tool that manages the lifecycle of "Bolts" (Units of Work).
+### Phase I: The Ritual (Intent)
 
-2. The Engine (IDE Agent): Your existing AI tool (Antigravity, Cursor, Jules, etc.) acts as the runtime, reading GEAS-AI's state to determine its allowed actions.
+1. `geas bind <feature>`: Creates the workspace.
+2. Drafting: The Human/Agent writes and review the Request and Specs.
+3. `geas seal intent`: The Human signs the Spec. This creates the "Vow." The Agent cannot change the Spec from this point on without breaking the seal.
 
-## Conclusion
+### Phase II: The Execution (Code)
 
-GEAS-AI provides the "Guardrails" for the AI era. It allows organizations to adopt autonomous agents while maintaining the strict auditability and quality standards required by enterprise software engineering.
+1. Coding: The Agent reads the sealed Spec and generates implementation files in src/.
+2. `geas seal code`: The Agent signs its work. GEAS generates a Manifest (Merkle Tree) of the generated code, proving exactly what the Agent produced.
+
+### Phase III: The Judgment (Proof)
+
+1. `geas prove`: The System runs the test suite (e.g., pytest).
+2. Sealing: If tests pass, the logs are captured and signed. This generates the MRP (Merge Request Package), a portable proof artifact.
+
+## The Trinity Lock
+
+The core innovation of GEAS is the Trinity Lock. Unlike a simple file hash, the Trinity Lock binds three distinct layers into a single cryptographic record:
+
+* Physical Integrity: "The content hasn't changed." (Merkle Tree)
+
+* Identity: "We know exactly who authorized this." (Ed25519 Signatures)
+
+* Audit History: "We know the sequence of events." (Hash-Chain Ledger)
+
+## Roadmap Summary
+
+[ ] Step 1 (Identity): Establishing the "Keyring" for Humans and Agents.
+
+[ ] Step 2 (The Manifest): Moving from single-file locks to whole-project Merkle Trees.
+
+[ ] Step 3 (Trinity Lock): Implementing the binding logic.
+
+[ ] Step 4 (Evidence): Automating the generation of the MRP (Proof Package).
+
+[] Step 5 (The Ward): Background daemons (geas ward) for friction-free governance.
