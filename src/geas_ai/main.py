@@ -1,14 +1,14 @@
 import typer
-from pact_ai.commands.init import init
-from pact_ai.commands import seal
-from pact_ai.commands import status
-from pact_ai.commands import verify
-from pact_ai.commands import lifecycle
-from pact_ai.commands import agents
+from geas_ai.commands.init import init
+from geas_ai.commands import seal
+from geas_ai.commands import status
+from geas_ai.commands import verify
+from geas_ai.commands import lifecycle
+from geas_ai.commands import agents
 
 app = typer.Typer(
-    name="pact",
-    help="Protocol for Agent Control & Trust (PACT) - CLI Tool",
+    name="geas",
+    help="Governance Enforcement for Agentic Systems (GEAS) - CLI Tool",
     add_completion=False,
 )
 
@@ -26,10 +26,10 @@ app.command(name="agents")(agents.agents)
 
 @app.command()  # type: ignore[misc]
 def version() -> None:
-    """Show the currently installed PACT version.
+    """Show the currently installed GEAS version.
 
     Usage:
-        $ pact version
+        $ geas version
     """
     print("0.1.0")
 

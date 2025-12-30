@@ -9,14 +9,14 @@ def runner():
 
 
 @pytest.fixture
-def setup_pact_environment(tmp_path):
+def setup_geas_environment(tmp_path):
     """
-    Sets up a temporary PACT environment with a global agents.yaml.
+    Sets up a temporary GEAS environment with a global agents.yaml.
     """
-    # Create .pacts/config structure in the tmp_path
-    pacts_dir = tmp_path / ".pacts"
-    pacts_dir.mkdir()
-    config_dir = pacts_dir / "config"
+    # Create .geas/config structure in the tmp_path
+    geas_dir = tmp_path / ".geas"
+    geas_dir.mkdir()
+    config_dir = geas_dir / "config"
     config_dir.mkdir()
 
     # Create a dummy agents.yaml
@@ -32,7 +32,7 @@ agents:
         encoding="utf-8",
     )
 
-    # Change CWD to tmp_path so pact commands run against this env
+    # Change CWD to tmp_path so geas commands run against this env
     cwd = os.getcwd()
     os.chdir(tmp_path)
     yield tmp_path

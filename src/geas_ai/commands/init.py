@@ -2,27 +2,27 @@ import os
 import typer
 from rich.console import Console
 from rich.panel import Panel
-from pact_ai.core import content
+from geas_ai.core import content
 
 console = Console()
 
 
 def init() -> None:
-    """Initialize the PACT governance layer in the current directory.
+    """Initialize the GEAS governance layer in the current directory.
 
-    Creates the .pacts/ directory structure and default configuration files.
-    This includes config/agents.yaml, config/models.yaml, and PACT_MANIFESTO.md.
+    Creates the .geas/ directory structure and default configuration files.
+    This includes config/agents.yaml, config/models.yaml, and GEAS_MANIFESTO.md.
 
     Usage:
-        $ pact init
+        $ geas init
     """
-    base_dir = ".pacts"
+    base_dir = ".geas"
 
     # 1. Check Pre-condition
     if os.path.exists(base_dir):
         console.print(
             Panel(
-                "[bold red]Error:[/bold red] PACT is already initialized in this directory.",
+                "[bold red]Error:[/bold red] GEAS is already initialized in this directory.",
                 title="Initialization Failed",
             )
         )
@@ -42,14 +42,14 @@ def init() -> None:
             f.write(content.DEFAULT_MODELS_YAML)
 
         # 4. Create Manifesto
-        with open("PACT_MANIFESTO.md", "w") as f:
+        with open("GEAS_MANIFESTO.md", "w") as f:
             f.write(content.MANIFESTO_CONTENT)
 
         # 5. Success Message
         console.print(
             Panel(
-                f"[bold green]Success![/bold green] PACT initialized at [blue]{os.path.abspath(base_dir)}[/blue]\n\nCreated:\n- .pacts/config/agents.yaml\n- .pacts/config/models.yaml\n- PACT_MANIFESTO.md",
-                title="PACT Protocol",
+                f"[bold green]Success![/bold green] GEAS initialized at [blue]{os.path.abspath(base_dir)}[/blue]\n\nCreated:\n- .geas/config/agents.yaml\n- .geas/config/models.yaml\n- GEAS_MANIFESTO.md",
+                title="GEAS Protocol",
             )
         )
 

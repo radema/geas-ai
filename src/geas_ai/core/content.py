@@ -67,11 +67,11 @@ DEFAULT_MODELS_YAML = """models:
     model_name: "mistral"
 """
 
-MANIFESTO_CONTENT = """# PACT_MANIFESTO.md
+MANIFESTO_CONTENT = """# GEAS_MANIFESTO.md
 
 ## Protocol for Agent Control & Trust
 
-1. **Protocol over Platform**: PACT is a local governance layer defined by the `.pacts/` directory structure.
+1. **Protocol over Platform**: GEAS is a local governance layer defined by the `.geas/` directory structure.
 2. **No Action Without Seal**: Execution is cryptographically blocked until the Blueprint (`02_specs.md`) is approved.
 3. **Separation of Concerns**: We separate Infrastructure (`models.yaml`) from Intellect (`agents.yaml`).
 4. **Filesystem Sovereignty**: The filesystem is the single source of truth.
@@ -90,11 +90,11 @@ Describe your feature request here. The Spec Writer will use this to generate th
 CONTEXT_TEMPLATE = """# Active Context
 
 **Current Bolt:** {bolt_name}
-**Path:** .pacts/bolts/{bolt_name}
+**Path:** .geas/bolts/{bolt_name}
 **Started:** {timestamp}
 
 ## Instructions for Agent
 You are currently working on the Bolt listed above.
 1. Read the `01_request.md` in the target directory.
-2. If strictly following PACT, do not edit code until `03_plan.md` is sealed.
+2. If strictly following GEAS, do not edit code until `03_plan.md` is sealed.
 """
