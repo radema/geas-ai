@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Core CLI**: Implementation of `pact init` command using Typer.
+- **Core CLI**: Implementation of `geas init` command using Typer.
 - **Protocol**: Default templates for `agents.yaml` (Senior Roles) and `models.yaml`.
-- **Manifesto**: `PACT_MANIFESTO.md` generation.
-- **Task Lifecycle**: Implementation of `pact new` command.
-- **Context Management**: Automatic updates to `.pacts/active_context.md`.
-- **Integrity**: Implementation of `pact seal` (hashing and locking) + `verify` and `status`.
+- **Manifesto**: `GEAS_MANIFESTO.md` generation.
+- **Task Lifecycle**: Implementation of `geas new` command.
+- **Context Management**: Automatic updates to `.geas/active_context.md`.
+- **Integrity**: Implementation of `geas seal` (hashing and locking) + `verify` and `status`.

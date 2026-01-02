@@ -1,8 +1,8 @@
-# PACT-AI: Protocol for Agent Control & Trust
+# GEAS-AI: Protocol for Agent Control & Trust
 
 **Status**: v0.1.0 (Alpha)
 
-PACT is a repository-native governance protocol designed for **Software Engineering 3.0**. It enforces a strict "Spec-First" workflow for AI Agents, ensuring that no code is written without a cryptographically sealed Blueprint.
+GEAS is a repository-native governance protocol designed for **Software Engineering 3.0**. It enforces a strict "Spec-First" workflow for AI Agents, ensuring that no code is written without a cryptographically sealed Blueprint.
 
 ## 🚀 Getting Started
 
@@ -10,9 +10,9 @@ PACT is a repository-native governance protocol designed for **Software Engineer
 
 ```bash
 # Requires Python 3.10+
-uv pip install pact-ai
+uv pip install geas-ai
 # OR run directly
-uv run pact --help
+uv run geas --help
 ```
 
 ### Initialization
@@ -20,10 +20,10 @@ uv run pact --help
 Bootstrap the governance layer in your project:
 
 ```bash
-uv run pact init
+uv run geas init
 ```
 
-This creates the `.pacts/` directory structure:
+This creates the `.geas/` directory structure:
 
 * `config/agents.yaml`: Defines your AI team personas.
 * `config/models.yaml`: Configures LLM providers.
@@ -34,13 +34,13 @@ This creates the `.pacts/` directory structure:
 Start a new "Bolt" (Unit of Work):
 
 ```bash
-uv run pact new feature-login
+uv run geas new feature-login
 ```
 
 This:
 
-1. Creates `.pacts/bolts/feature-login/`.
-2. Updates `.pacts/active_context.md` (The Pointer).
+1. Creates `.geas/bolts/feature-login/`.
+2. Updates `.geas/active_context.md` (The Pointer).
 
 ### The Workflow
 
@@ -58,7 +58,7 @@ See `CONTRIBUTING.md` for development instructions.
 
 ## 📄 License
 
-PACT-AI is dual-licensed under the **MIT License** and the **Apache License 2.0**.
+GEAS-AI is dual-licensed under the **MIT License** and the **Apache License 2.0**.
 
 * See [LICENSE-MIT](LICENSE-MIT) for details.
 * See [LICENSE-APACHE](LICENSE-APACHE) for details.
