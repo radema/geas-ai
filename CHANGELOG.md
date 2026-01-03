@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-01-04
+
+### Added
+
+- **Intent Engine (Phase 2)**: Implementation of `geas seal intent`.
+- **Cryptographic Ledger**: Introduction of `lock.json`, an append-only hash chain ledger.
+- **Workflow Engine**: Parsing and validation of `.geas/config/workflow.yaml` (with hardcoded defaults).
+- **Architecture**: Single Source of Truth pattern for sealing events (unifying `req`, `specs`, `plan`, `intent`, `mrp`).
+
+### Changed
+
+- **Seal Command**: `geas seal` now writes signature-backed events to `lock.json`.
+- **Initialization**: `geas new` and `init` now support the new ledger structure.
+
+### Deprecated
+
+- **Legacy Lock File**: `approved.lock` (YAML) is deprecated and replaced by `lock.json`.
+
 ## [0.1.1] - 2026-01-03
 
 ### Added
