@@ -5,6 +5,7 @@ from geas_ai.commands import status
 from geas_ai.commands import verify
 from geas_ai.commands import lifecycle
 from geas_ai.commands import agents
+from geas_ai.commands import identity
 
 app = typer.Typer(
     name="geas",
@@ -22,6 +23,7 @@ app.command(name="checkout")(lifecycle.checkout)
 app.command(name="delete")(lifecycle.delete)
 app.command(name="archive")(lifecycle.archive)
 app.command(name="agents")(agents.agents)
+app.add_typer(identity.app, name="identity")
 
 
 @app.command()  # type: ignore[misc]
