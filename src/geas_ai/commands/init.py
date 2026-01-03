@@ -41,6 +41,9 @@ def init() -> None:
         with open(os.path.join(base_dir, "config", "models.yaml"), "w") as f:
             f.write(content.DEFAULT_MODELS_YAML)
 
+        with open(os.path.join(base_dir, "config", "identities.yaml"), "w") as f:
+            f.write(content.DEFAULT_IDENTITIES_YAML)
+
         # 4. Create Manifesto
         with open("GEAS_MANIFESTO.md", "w") as f:
             f.write(content.MANIFESTO_CONTENT)
@@ -48,7 +51,7 @@ def init() -> None:
         # 5. Success Message
         console.print(
             Panel(
-                f"[bold green]Success![/bold green] GEAS initialized at [blue]{os.path.abspath(base_dir)}[/blue]\n\nCreated:\n- .geas/config/agents.yaml\n- .geas/config/models.yaml\n- GEAS_MANIFESTO.md",
+                f"[bold green]Success![/bold green] GEAS initialized at [blue]{os.path.abspath(base_dir)}[/blue]\n\nCreated:\n- .geas/config/agents.yaml\n- .geas/config/models.yaml\n- .geas/config/identities.yaml\n- GEAS_MANIFESTO.md",
                 title="GEAS Protocol",
             )
         )
