@@ -12,8 +12,8 @@ wheels/
 .venv
 
 # GEAS config
-.geas/config/*
-.geas_legacy/config/*
+.geas/config/
+.geas_legacy/config/
 
 # Antigravity
 .agent
