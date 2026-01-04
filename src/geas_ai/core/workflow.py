@@ -47,6 +47,13 @@ class WorkflowManager:
                 required_role="agent",
                 prerequisite="intent",
                 description="Seal Merge Request Package"
+            ),
+            WorkflowStage(
+                id="approve",
+                action="APPROVE",
+                required_role="human",
+                prerequisite="mrp",
+                description="Approve for Merge"
             )
         ]
     )
