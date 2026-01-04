@@ -345,6 +345,7 @@ version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "cryptography" },
+    { name = "pathspec" },
     { name = "pre-commit" },
     { name = "pydantic" },
     { name = "pyyaml" },
@@ -365,11 +366,13 @@ docs = [
     { name = "mkdocs" },
     { name = "mkdocs-material" },
     { name = "mkdocstrings", extra = ["python"] },
+    { name = "pydantic" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "cryptography", specifier = ">=46.0.3" },
+    { name = "pathspec", specifier = ">=0.12.1" },
     { name = "pre-commit", specifier = ">=4.5.1" },
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "pyyaml", specifier = ">=6.0.3" },
@@ -390,6 +393,7 @@ docs = [
     { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-material", specifier = ">=9.7.1" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=1.0.0" },
+    { name = "pydantic", specifier = ">=2.12.5" },
 ]
 
 [[package]]
