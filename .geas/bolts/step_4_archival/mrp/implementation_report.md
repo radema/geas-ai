@@ -1,12 +1,12 @@
-# Implementation Report: Verification Engine Core
+# Implementation Report: Verification Engine
 
 **Bolt:** step_4_archival
-**Status:** IMPLEMENTED (Foundations & Core Logic)
+**Status:** COMPLETE (Steps 1, 2, & 3)
 **Date:** 2025-01-04
 
 ## Overview
 
-This report details the implementation of the core verification logic for the GEAS Verification Engine. The work covers Step 1 (Foundations) and Step 2 (Core Verification Logic) of the implementation plan.
+This report details the implementation of the Verification Engine for GEAS. The work covers Step 1 (Foundations), Step 2 (Core Verification Logic), and Step 3 (CLI Commands) of the implementation plan.
 
 ## Implemented Components
 
@@ -50,25 +50,32 @@ Implemented the four pillars of verification:
     -   Handles both single-file artifacts (Req, Specs) and multi-file intents.
     -   Reports missing or modified files.
 
-### 3. Configuration (`src/geas_ai/core/workflow.py`)
+### 3. CLI Commands (`src/geas_ai/commands/`)
 
--   Updated `WorkflowManager` to load and validate the new `WorkflowConfig` structure.
--   Updated default workflow fallback.
+-   **`status.py`**: Refactored to read from the cryptographic ledger (`lock.json`).
+    -   Displays bolt metadata and current state.
+    -   Renders a Rich table of event history (Sequence, Timestamp, Action, Signer).
+-   **`verify.py`**: Refactored to utilize the new Core Verification Logic.
+    -   Runs all 4 verification pillars.
+    -   Outputs a beautiful Rich report summarizing Pass/Fail status and detailing violations.
+    -   Supports `--json` for CI integration and `--content` for optional file hash checks.
+-   **`approve.py`**: Created new command for human approval.
+    -   Validates the signer is a `HUMAN` identity.
+    -   Ensures `SEAL_MRP` exists in the ledger.
+    -   Appends a signed `APPROVE` event to `lock.json`.
 
 ## Testing
 
-A comprehensive unit test suite was created in `tests/core/test_verification.py`.
+A comprehensive test suite was implemented.
 
--   **Coverage**: 100% of new logic.
--   **Scenarios**:
-    -   Valid/Invalid Chain (broken links, tampered events).
-    -   Valid/Invalid Signatures (wrong key, modified content, revoked key).
-    -   Workflow Compliance (success, missing stages, role violations, out-of-order execution).
-    -   Content Integrity (success, modified files, missing files).
+-   **Unit Tests (`tests/core/test_verification.py`)**:
+    -   Coverage: 100% of core logic.
+    -   Scenarios: Valid/Invalid Chain, Signatures, Workflow, Content.
+-   **Integration Tests (`tests/commands/test_status_verify_approve.py`)**:
+    -   Tested `geas status` with empty and populated ledgers.
+    -   Tested `geas verify` with passing and failing checks, and JSON output.
+    -   Tested `geas approve` success flow, missing MRP failure, and agent role failure.
 
-## Next Steps (Step 3)
+## Conclusion
 
-With the core logic solid, the next phase will focus on:
-1.  **CLI Integration**: Refactoring `geas verify` to use this new engine.
-2.  **Status Command**: Refactoring `geas status` to visualize the ledger.
-3.  **Approval**: Implementing `geas approve` to write `APPROVE` events.
+The Verification Engine is fully implemented, allowing users to verify the integrity of their Bolts and formally approve them for merge, strictly adhering to the governance policies defined in `workflow.yaml`.
