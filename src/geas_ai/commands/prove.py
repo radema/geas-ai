@@ -32,17 +32,12 @@ def prove(
         bolt_id = get_active_bolt_name()
 
         # 1. State Check: Is SEAL_INTENT present?
-        # load_lock expects bolt_path, not root_dir.
-        # But wait, ledger is per bolt in Phase 2?
-        # Specs say "lock.json ledger".
-        # LedgerManager.load_lock(bolt_path)
-
         bolt_path = root_dir / ".geas" / "bolts" / bolt_id
         ledger = LedgerManager.load_lock(bolt_path)
 
         if not ledger:
-             print(f"[bold red]Error:[/bold red] Ledger not found for bolt '[cyan]{bolt_id}[/cyan]'.")
-             raise typer.Exit(code=1)
+            print(f"[bold red]Error:[/bold red] Ledger not found for bolt '[cyan]{bolt_id}[/cyan]'.")
+            raise typer.Exit(code=1)
 
         has_sealed_intent = any(
             e.action == "SEAL_INTENT"
@@ -56,11 +51,7 @@ def prove(
         # 2. Testing
         if skip_tests:
             print("[yellow]Skipping tests as requested.[/yellow]")
-            # Create a dummy passed result for skipped tests?
-            # Or should we fail? The manifest needs a TestResult.
-            # We'll create a placeholder result indicating skipped.
             from geas_ai.core.manifest import TestResultInfo
-            from datetime import datetime
             test_result = TestResultInfo(
                 passed=True, # Tentatively true if skipped? Or should be marked specially?
                              # Specs say "Skip tests (Flag) For manual override/debugging".
