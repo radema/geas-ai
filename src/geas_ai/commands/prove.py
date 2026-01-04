@@ -4,11 +4,12 @@ import json
 import logging
 from typing import Optional
 from pathlib import Path
+from datetime import datetime, timezone
 from rich import print
 from rich.panel import Panel
 
-from geas_ai.core.identity import ensure_geas_root, get_active_bolt
-from geas_ai.core.ledger import load_ledger
+from geas_ai.utils import ensure_geas_root, get_active_bolt_name
+from geas_ai.core.ledger import LedgerManager
 from geas_ai.core.testing import run_tests
 from geas_ai.core.walker import walk_source_files
 from geas_ai.core.manifest import generate_manifest
@@ -28,12 +29,23 @@ def prove(
     """
     try:
         root_dir = ensure_geas_root()
-        bolt_id = get_active_bolt(root_dir)
+        bolt_id = get_active_bolt_name()
 
         # 1. State Check: Is SEAL_INTENT present?
-        ledger = load_ledger(root_dir)
+        # load_lock expects bolt_path, not root_dir.
+        # But wait, ledger is per bolt in Phase 2?
+        # Specs say "lock.json ledger".
+        # LedgerManager.load_lock(bolt_path)
+
+        bolt_path = root_dir / ".geas" / "bolts" / bolt_id
+        ledger = LedgerManager.load_lock(bolt_path)
+
+        if not ledger:
+             print(f"[bold red]Error:[/bold red] Ledger not found for bolt '[cyan]{bolt_id}[/cyan]'.")
+             raise typer.Exit(code=1)
+
         has_sealed_intent = any(
-            e.event_type == "SEAL_INTENT" and e.bolt_id == bolt_id
+            e.action == "SEAL_INTENT"
             for e in ledger.events
         )
 
@@ -54,7 +66,7 @@ def prove(
                              # Specs say "Skip tests (Flag) For manual override/debugging".
                 exit_code=0,
                 duration_seconds=0.0,
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(timezone.utc)
             )
         else:
             print(f"[bold blue]Running tests...[/bold blue] ({command})")
