@@ -4,16 +4,21 @@ from datetime import datetime, timezone
 from rich.console import Console
 
 from geas_ai import utils
-from geas_ai.core import ledger, identity, hashing
+from geas_ai.core import ledger, identity
 from geas_ai.schemas import ledger as ledger_schemas
 from geas_ai.schemas.identity import IdentityRole
 from geas_ai.utils import crypto
 
 console = Console()
 
+
 def approve(
-    identity_name: str = typer.Option(..., "--identity", "-i", help="Identity to sign approval (must be human)"),
-    comment: Optional[str] = typer.Option(None, "--comment", "-c", help="Optional approval comment"),
+    identity_name: str = typer.Option(
+        ..., "--identity", "-i", help="Identity to sign approval (must be human)"
+    ),
+    comment: Optional[str] = typer.Option(
+        None, "--comment", "-c", help="Optional approval comment"
+    ),
 ) -> None:
     """Approve the sealed MRP for merge.
 
@@ -39,14 +44,18 @@ def approve(
             break
 
     if not mrp_event:
-        console.print("[bold red]Error:[/bold red] Cannot approve: MRP is not yet sealed.")
+        console.print(
+            "[bold red]Error:[/bold red] Cannot approve: MRP is not yet sealed."
+        )
         raise typer.Exit(code=1)
 
     # Check if already approved? (Optional, but good UX)
     # The spec doesn't strictly forbid double approval, but let's warn.
     for event in ledger_obj.events:
         if event.action == ledger_schemas.LedgerAction.APPROVE:
-            console.print("[yellow]Warning: This bolt already has an approval.[/yellow]")
+            console.print(
+                "[yellow]Warning: This bolt already has an approval.[/yellow]"
+            )
 
     # 3. Validate Identity
     id_manager = identity.IdentityManager()
@@ -54,11 +63,15 @@ def approve(
     signer = id_store.get_by_name(identity_name)
 
     if not signer:
-        console.print(f"[bold red]Error:[/bold red] Identity '{identity_name}' not found.")
+        console.print(
+            f"[bold red]Error:[/bold red] Identity '{identity_name}' not found."
+        )
         raise typer.Exit(code=1)
 
     if signer.role != IdentityRole.HUMAN:
-        console.print(f"[bold red]Error:[/bold red] Only HUMAN identities can approve. '{identity_name}' is {signer.role.value}.")
+        console.print(
+            f"[bold red]Error:[/bold red] Only HUMAN identities can approve. '{identity_name}' is {signer.role.value}."
+        )
         raise typer.Exit(code=1)
 
     # 4. Create Approval Event
@@ -66,10 +79,7 @@ def approve(
     # Spec says: "Reference the sealed MRP."
     # Let's reference the `mrp_event.event_hash` specifically to be precise.
 
-    payload = {
-        "mrp_event_hash": mrp_event.event_hash,
-        "comment": comment or ""
-    }
+    payload = {"mrp_event_hash": mrp_event.event_hash, "comment": comment or ""}
 
     # 5. Sign
     try:
@@ -88,21 +98,25 @@ def approve(
 
         # 6. Append
         event = ledger_schemas.LedgerEvent(
-            sequence=0, # Set by append
+            sequence=0,  # Set by append
             timestamp=datetime.now(timezone.utc),
             action=ledger_schemas.LedgerAction.APPROVE,
             payload=payload,
             identity=event_identity,
-            event_hash="" # Set by append
+            event_hash="",  # Set by append
         )
 
         ledger.LedgerManager.append_event(ledger_obj, event)
         ledger.LedgerManager.save_lock(bolt_path, ledger_obj)
 
-        console.print(f"[bold green]Approved![/bold green] Bolt '{ledger_obj.bolt_id}' is approved by '{identity_name}'.")
+        console.print(
+            f"[bold green]Approved![/bold green] Bolt '{ledger_obj.bolt_id}' is approved by '{identity_name}'."
+        )
 
     except identity.KeyNotFoundError:
-        console.print(f"[bold red]Error:[/bold red] Private key for '{identity_name}' not found.")
+        console.print(
+            f"[bold red]Error:[/bold red] Private key for '{identity_name}' not found."
+        )
         raise typer.Exit(code=1)
     except Exception as e:
         console.print(f"[bold red]Error:[/bold red] Approval failed: {e}")
