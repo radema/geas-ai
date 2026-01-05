@@ -2,6 +2,49 @@
   "version": "3.1",
   "bolt_id": "lifecycle",
   "created_at": "2026-01-05T15:02:37.595625",
-  "head_hash": null,
-  "events": []
+  "head_hash": "sha256:03e9856003252011905ba5f9a0a765cba09730b67b9a41c78f48e6ab979c4613",
+  "events": [
+    {
+      "sequence": 1,
+      "timestamp": "2026-01-05T15:21:10.260344",
+      "action": "SEAL_REQ",
+      "payload": {
+        "target": "req",
+        "file": "01_request.md",
+        "hash": "sha256:8b18fb7c428bf673511e38c896ea384fda20395b06d4a7c9a43e8e4462c2d850",
+        "context": ""
+      },
+      "prev_hash": null,
+      "identity": null,
+      "event_hash": "sha256:1574881ca86de80539afa5d51e9ade4e58153d53d3f9a10219f086f793d21841"
+    },
+    {
+      "sequence": 2,
+      "timestamp": "2026-01-05T15:21:10.439516",
+      "action": "SEAL_SPECS",
+      "payload": {
+        "target": "specs",
+        "file": "02_specs.md",
+        "hash": "sha256:2bc181e1488952b3a07284909605addcbd66a409f5f852eb4278ee5be8d2f957",
+        "context": ""
+      },
+      "prev_hash": "sha256:1574881ca86de80539afa5d51e9ade4e58153d53d3f9a10219f086f793d21841",
+      "identity": null,
+      "event_hash": "sha256:dfb2359b55d3e94d8c0a6f83993f072f57f59b14fcc27694a43f83d9a67dce5f"
+    },
+    {
+      "sequence": 3,
+      "timestamp": "2026-01-05T15:21:10.613569",
+      "action": "SEAL_PLAN",
+      "payload": {
+        "target": "plan",
+        "file": "03_plan.md",
+        "hash": "sha256:7d5ce9e4a64f33105e750cf725d12db67945690760d6e556aa2d2f7f3abba2c0",
+        "context": ""
+      },
+      "prev_hash": "sha256:dfb2359b55d3e94d8c0a6f83993f072f57f59b14fcc27694a43f83d9a67dce5f",
+      "identity": null,
+      "event_hash": "sha256:03e9856003252011905ba5f9a0a765cba09730b67b9a41c78f48e6ab979c4613"
+    }
+  ]
 }
