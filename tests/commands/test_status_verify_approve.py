@@ -11,6 +11,7 @@ from geas_ai.schemas.verification import (
 )
 from geas_ai.schemas.identity import Identity, IdentityRole
 from datetime import datetime, timezone
+from cryptography.hazmat.primitives.asymmetric import ed25519
 
 runner = CliRunner()
 
@@ -215,7 +216,9 @@ def test_approve_success(
     )
     mock_identity_manager.return_value.load.return_value = mock_store
 
-    mock_key_manager.load_private_key.return_value = MagicMock()
+    mock_key_manager.load_private_key.return_value = MagicMock(
+        spec=ed25519.Ed25519PrivateKey
+    )
     mock_sign.return_value = "signature"
 
     result = runner.invoke(app, ["approve", "--identity", "human"])

@@ -43,7 +43,12 @@ def load_private_key_from_bytes(key_bytes: bytes) -> ed25519.Ed25519PrivateKey:
     Loads an Ed25519 private key from bytes (PEM/OpenSSH).
     """
     try:
-        return serialization.load_ssh_private_key(key_bytes, password=None)
+        key = serialization.load_ssh_private_key(key_bytes, password=None)
+        if not isinstance(key, ed25519.Ed25519PrivateKey):
+            raise CryptoError(
+                f"Unsupported key type: {type(key)}. Only Ed25519 is supported."
+            )
+        return key
     except Exception as e:
         raise CryptoError(f"Failed to load private key: {e}")
 
@@ -65,6 +70,8 @@ def verify(public_key_str: str, signature_b64: str, payload_bytes: bytes) -> boo
     """
     try:
         public_key = serialization.load_ssh_public_key(public_key_str.encode("utf-8"))
+        if not isinstance(public_key, ed25519.Ed25519PublicKey):
+            return False
         signature = b64decode(signature_b64)
         public_key.verify(signature, payload_bytes)
         return True

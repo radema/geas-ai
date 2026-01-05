@@ -8,6 +8,7 @@ from geas_ai.core import ledger, identity
 from geas_ai.schemas import ledger as ledger_schemas
 from geas_ai.schemas.identity import IdentityRole
 from geas_ai.utils import crypto
+from cryptography.hazmat.primitives.asymmetric import ed25519
 
 console = Console()
 
@@ -85,6 +86,8 @@ def approve(
     try:
         # Load Private Key
         private_key_obj = identity.KeyManager.load_private_key(identity_name)
+        if not isinstance(private_key_obj, ed25519.Ed25519PrivateKey):
+            raise ValueError("Loaded key is not an Ed25519 private key")
 
         # Canonicalize and Sign
         canonical_bytes = crypto.canonicalize_json(payload)

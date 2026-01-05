@@ -8,6 +8,12 @@ from geas_ai import utils
 from geas_ai.core import verification, workflow as workflow_core
 from geas_ai.core.ledger import LedgerManager
 from geas_ai.core.identity import IdentityManager
+from geas_ai.schemas.verification import (
+    ChainValidationResult,
+    SignatureValidationResult,
+    WorkflowValidationResult,
+    ContentValidationResult,
+)
 
 console = Console()
 
@@ -92,7 +98,14 @@ def verify(
         raise typer.Exit(code=1)
 
 
-def _print_report(bolt_name, valid, chain, sig, flow, content):
+def _print_report(
+    bolt_name: str,
+    valid: bool,
+    chain: ChainValidationResult,
+    sig: SignatureValidationResult,
+    flow: WorkflowValidationResult,
+    content: Optional[ContentValidationResult],
+) -> None:
     console.print(Panel(f"[bold]Verification Report:[/bold] {bolt_name}", expand=False))
 
     # Summary Table
@@ -101,7 +114,7 @@ def _print_report(bolt_name, valid, chain, sig, flow, content):
     table.add_column("Status")
     table.add_column("Details")
 
-    def status_style(is_valid):
+    def status_style(is_valid: bool) -> str:
         return "[green]PASS[/green]" if is_valid else "[red]FAIL[/red]"
 
     table.add_row(
