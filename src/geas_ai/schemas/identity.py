@@ -21,8 +21,6 @@ class Identity(BaseModel):
         if self.role == IdentityRole.AGENT:
             if not self.persona:
                 raise ValueError("Field required for Agent role")
-            if not self.model:
-                 raise ValueError("Field required for Agent role")
         return self
 
 class IdentityStore(BaseModel):

@@ -240,6 +240,18 @@ workflow:
       prerequisite: "proof"
 ```
 
+### The Standard Workflow
+
+While GEAS is configurable, we recommend the **Standard Workflow** for robust governance:
+
+1. **Request** (`01_request.md`): A human defines the business need.
+2. **Specs** (`02_specs.md`): A human (or agent) refines the request into technical specifications.
+3. **Plan** (`03_plan.md`): An agent outlines the implementation plan.
+4. **Intent** (`SEAL_INTENT`): A human reviews all three documents and seals them as a single "Intent" package. This creates the immutable baseline.
+5. **Code**: The agent implements the features.
+6. **MRP** (`SEAL_MRP`): The agent runs tests and seals the proof of work.
+7. **Approve** (`APPROVE`): A human reviews the MRP and authorizes the merge.
+
 The `geas verify` command validates the current Bolt state against this workflow definition.
 
 ---
