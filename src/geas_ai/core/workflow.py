@@ -66,7 +66,7 @@ class WorkflowManager:
         """
         if config_path and config_path.exists():
             # Use 'safe' loading to prevent arbitrary code execution from untrusted configs
-            yaml = YAML(typ='safe')
+            yaml = YAML(typ="safe")
             try:
                 with open(config_path, "r") as f:
                     data = yaml.load(f)
