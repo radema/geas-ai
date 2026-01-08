@@ -1,8 +1,8 @@
 # Active Context
 
-**Current Bolt:** step_4_archival
-**Path:** .geas/bolts/step_4_archival
-**Started:** 2026-01-04 16:51:09
+**Current Bolt:** lifecycle
+**Path:** .geas/bolts/lifecycle
+**Started:** 2026-01-05T15:25:09.021400
 
 ## Instructions for Agent
 You are currently working on the Bolt listed above.

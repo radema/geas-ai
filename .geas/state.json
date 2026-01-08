@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "active_bolt": "lifecycle",
+  "last_updated": "2026-01-05T15:25:09.021400",
+  "bolts": {
+    "lifecycle": {
+      "status": "active",
+      "created_at": "2026-01-05T15:25:09.021176",
+      "path": ".geas/bolts/lifecycle"
+    }
+  }
+}
