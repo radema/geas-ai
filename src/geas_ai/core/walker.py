@@ -36,7 +36,7 @@ def walk_source_files(root_dir: Path, scope_dirs: List[str]) -> List[str]:
         List of file paths relative to root_dir.
     """
     spec = load_gitignore_patterns(root_dir)
-    collected_files = []
+    collected_files = set()
 
     # Ensure scope directories exist
     valid_scope_dirs = []
@@ -74,6 +74,6 @@ def walk_source_files(root_dir: Path, scope_dirs: List[str]) -> List[str]:
             for file in files:
                 file_rel_path = rel_root / file
                 if not spec.match_file(str(file_rel_path)):
-                    collected_files.append(str(file_rel_path))
+                    collected_files.add(str(file_rel_path))
 
-    return sorted(collected_files)
+    return sorted(list(collected_files))
