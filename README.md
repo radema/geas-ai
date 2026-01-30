@@ -1,12 +1,46 @@
 # GEAS-AI: Protocol for Agent Control & Trust
 
-**Status**: v0.1.3 (Alpha)
+**Status**: v0.1.3 (Archived)
 
 GEAS is a repository-native governance protocol designed for **Software Engineering 3.0**. It enforces a strict "Spec-First" workflow for AI Agents, ensuring that no code is written without a cryptographically sealed Blueprint.
 
 > **Note**: While GEAS provides a default "Spec-First" workflow, the protocol is theoretically configurable. It can be used as a standalone tool to drive agents during coding sessions, ensuring cryptographic provenance even without a full governance team.
 
+## 📋 Project Post-Mortem: Lessons Learned
+
+### The Genesis - First Agent-Driven Project
+
+GEAS-AI began as an experiment in agent-driven development, built by a developer curious about solving the "agent trust" problem. The initial excitement stemmed from envisioning a world where AI agents could collaborate with humans on software engineering projects under a robust governance framework. The project represented an ambitious attempt to create a protocol that would enable trustworthy, auditable, and controllable AI agent interactions in software development workflows.
+
+### The Discovery Phase - Testing Against Reality
+
+Real-world experimentation with agentic systems revealed a different landscape than initially anticipated. Testing against modern tools like Cursor, Windsurf, and Opencode showed that the agent framework ecosystem, while promising, was still in its early stages. Observations indicated that many "agent" solutions were essentially sophisticated toolchains rather than truly autonomous systems. The maturity gap between vision and reality became apparent, suggesting that the industry was still solving foundational problems rather than governance challenges.
+
+### The Technical Realization
+
+The project's core technical insight came from understanding GPG (GNU Privacy Guard) - a battle-tested cryptographic system for digital signatures and encryption. GEAS was built around Ed25519 keys and GPG-like operations to ensure cryptographic provenance of all agent activities. However, a critical realization emerged: the project was over-engineered for the problem it试图解决. The complexity analysis revealed that most of the governance mechanisms being built were redundant, as existing tools like Git with GPG signatures already provided the cryptographic guarantees needed for trustworthy development workflows.
+
+### The Conclusion - Project Closure
+
+After months of development and experimentation, the decision was made to close the GEAS-AI experiment. The key insight was that Git and GPG already solve the same problems that GEAS attempted to address, without imposing additional change management burden. While the protocol was technically sound and implemented correctly, it represented a solution looking for a problem that didn't truly exist in practice. The project served as an excellent learning experience in first-principles thinking and the importance of validating assumptions against reality.
+
+### Lessons for Future Projects
+
+**MVP Testing Value**: Building a minimal viable product early would have revealed the redundancy of the solution much faster, saving significant development time.
+
+**When to Innovate vs Leverage**: The project highlighted the critical importance of leveraging existing, battle-tested solutions rather than reinventing wheels, especially when security and cryptography are involved.
+
+**Importance of Honest Retrospectives**: Regular, honest reassessment of the project's value proposition versus complexity would have led to an earlier pivot or conclusion.
+
+**First-Principles Thinking Lessons**: The experience reinforced the value of questioning fundamental assumptions - in this case, whether the "agent trust" problem truly needed a new protocol or could be solved with existing tools.
+
+---
+
+*GEAS-AI is now archived but remains publicly available as a learning resource for those interested in governance protocols, cryptographic provenance, and the evolution of agent-driven development paradigms.*
+
 ## 🚀 Getting Started
+
+> **Note**: The following documentation remains for archival and reference purposes. While the tool is functional, it is no longer actively maintained.
 
 ### Installation
 
