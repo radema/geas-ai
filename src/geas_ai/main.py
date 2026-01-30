@@ -22,7 +22,7 @@ def version() -> None:
     Usage:
         $ geas version
     """
-    print("0.1.3")
+    print("0.2.1")
 
 
 # Register commands

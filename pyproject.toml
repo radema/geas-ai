@@ -1,6 +1,6 @@
 [project]
 name = "geas-ai"
-version = "0.1.1"
+version = "0.2.1"
 readme = "README.md"
 authors = [
     { name = "Raul De Maio"}
@@ -11,6 +11,7 @@ dependencies = [
     "pathspec>=0.12.1",
     "pre-commit>=4.5.1",
     "pydantic>=2.12.5",
+    "pytest-cov>=7.0.0",
     "pyyaml>=6.0.3",
     "rich>=14.2.0",
     "ruamel-yaml>=0.19.1",
